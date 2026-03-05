@@ -25,30 +25,28 @@
         .promo-card {
             position: relative;
             width: fit-content;
-            padding: 2px; /* Ez határozza meg a keret vastagságát */
-            background: rgba(255, 255, 255, 0.1);
+            padding: 2px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.2s ease;
         }
 
-        /* A futó fénycsík effekt */
+        /* Kereten körbefutó fénycsík */
         .promo-card::before {
             content: '';
             position: absolute;
-            /* A kártya közepétől indulva egy hatalmas forgó kúpos színátmenet */
             top: 50%;
             left: 50%;
             width: 150%; 
             height: 300%;
             transform: translate(-50%, -50%);
-            /* Csak egy kis szeletet hagyunk meg fénynek, a többi átlátszó */
             background: conic-gradient(
                 from 0deg,
                 transparent 0%,
-                transparent 70%,
-                var(--cyan) 85%,
+                transparent 75%,
+                var(--cyan) 90%,
                 transparent 100%
             );
             animation: border-run 3s linear infinite;
@@ -62,12 +60,12 @@
         .inner-content {
             position: relative;
             background: var(--card-bg);
-            padding: 16px 30px;
+            padding: 16px 32px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 20px;
-            z-index: 1; /* Hogy a tartalom a fény felett legyen */
+            z-index: 1;
         }
 
         .text-label {
@@ -86,21 +84,37 @@
             text-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
         }
 
+        /* Világító #AD badge */
         .ad-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #444;
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
             font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 2px 8px;
+            border-radius: 5px;
             font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+            animation: glow-pulse 1.5s infinite ease-in-out alternate;
+        }
+
+        @keyframes glow-pulse {
+            from {
+                box-shadow: 0 0 5px rgba(0, 242, 255, 0.3);
+                border-color: rgba(0, 242, 255, 0.5);
+                opacity: 0.7;
+            }
+            to {
+                box-shadow: 0 0 15px rgba(0, 242, 255, 0.8);
+                border-color: var(--cyan);
+                opacity: 1;
+            }
         }
 
         .promo-card:hover {
             transform: scale(1.05);
         }
 
-        /* "Másolva" animáció */
         .copy-tooltip {
             position: absolute;
             top: -40px;
@@ -108,7 +122,7 @@
             transform: translateX(-50%);
             background: var(--cyan);
             color: black;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: bold;
@@ -137,9 +151,7 @@
     <script>
         function copyCode() {
             const code = document.getElementById('promoCode').innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                // Siker esetén itt lehetne még finomítani, de a CSS megoldja a villanást
-            });
+            navigator.clipboard.writeText(code);
         }
     </script>
 
